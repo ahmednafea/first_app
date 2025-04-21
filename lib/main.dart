@@ -128,7 +128,7 @@ class _DetailsPageState extends State<DetailsPage> {
             GestureDetector(
               onTap: () {
                 setState(() {
-                  width = (width == 100 ? 300 : 100);
+                  // width = (width == 100 ? 300 : 100);
                   height = (height == 100 ? 300 : 100);
                   color = (color == Colors.blue ? Colors.pink : Colors.blue);
                   fontSize = (fontSize == 12 ? 32 : 12);
