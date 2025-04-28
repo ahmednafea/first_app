@@ -33,19 +33,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String title = "Hi Hi";
+
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 4), () {
-      print("helo");
-      Navigator.of(context).push(
-        PageTransition(
-          type: PageTransitionType.rotate,
-          alignment: Alignment.center,
-          duration: Duration(milliseconds: 1500),
-          child: DetailsPage(),
-        ),
-      );
+    Future.delayed(Duration(seconds: 15), () {
+      setState(() {
+        title = "bye bye";
+      });
     });
   }
 
@@ -53,31 +49,29 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: AppBar(title: Text("Home Page")),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Lottie.asset('assets/animations/bird_dart.json'),
-            // GestureDetector(
-            //   onTap: () {
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(builder: (_) => DetailsPage()),
-            //     );
-            //   },
-            //   child: Hero(
-            //     tag: 'logoHero',
-            //     child: ClipRRect(
-            //       borderRadius: BorderRadius.circular(8),
-            //       child: Image.network(
-            //         'https://beecrowd.com/wp-content/uploads/2024/04/2022-06-23-Flutter.jpg', // تأكد إن الصورة موجودة في assets
-            //         width: 100,
-            //       ),
-            //     ),
-            //   ),
-            // ),
-          ],
-        ),
+      body: ListView(
+        children: [
+          Lottie.asset('assets/animations/bird_dart.json'),
+          SizedBox(height: 400, child: WelcomeScreen(title: title))
+          // GestureDetector(
+          //   onTap: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(builder: (_) => DetailsPage()),
+          //     );
+          //   },
+          //   child: Hero(
+          //     tag: 'logoHero',
+          //     child: ClipRRect(
+          //       borderRadius: BorderRadius.circular(8),
+          //       child: Image.network(
+          //         'https://beecrowd.com/wp-content/uploads/2024/04/2022-06-23-Flutter.jpg', // تأكد إن الصورة موجودة في assets
+          //         width: 100,
+          //       ),
+          //     ),
+          //   ),
+          // ),
+        ],
       ),
     );
   }
@@ -131,7 +125,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   // width = (width == 100 ? 300 : 100);
                   height = (height == 100 ? 300 : 100);
                   color = (color == Colors.blue ? Colors.pink : Colors.blue);
-                  fontSize = (fontSize == 12 ? 32 : 12);
+                  // fontSize = (fontSize == 12 ? 32 : 12);
                 });
               },
               child: AnimatedContainer(
@@ -148,6 +142,49 @@ class _DetailsPageState extends State<DetailsPage> {
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class WelcomeScreen extends StatefulWidget {
+  const WelcomeScreen({super.key, required this.title});
+
+  final String title;
+
+  @override
+  State<StatefulWidget> createState() {
+    return WelcomeScreenState();
+  }
+}
+
+class WelcomeScreenState extends State<WelcomeScreen> {
+  TextEditingController nameController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    print(widget.title);
+  }
+
+  @override
+  void didUpdateWidget(covariant WelcomeScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.title != widget.title) {
+      print('Title has changed from ${oldWidget.title} to ${widget.title}');
+    }
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
       ),
     );
   }
