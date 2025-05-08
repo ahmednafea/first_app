@@ -1,12 +1,12 @@
-import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:first_app/cache_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
-import 'package:page_transition/page_transition.dart';
 
 import 'digital_watch_screen.dart';
 
 void main() {
+  CacheHelper.init();
   runApp(const MyApp());
 }
 
@@ -162,6 +162,7 @@ class WelcomeScreen extends StatefulWidget {
 
 class WelcomeScreenState extends State<WelcomeScreen> {
   TextEditingController nameController = TextEditingController();
+
   @override
   void initState() {
     super.initState();

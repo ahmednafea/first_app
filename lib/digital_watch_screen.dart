@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:first_app/cache_helper.dart';
+import 'package:first_app/custome_text_widget.dart';
 import 'package:flutter/material.dart';
 
 class DigitalWatchScreen extends StatefulWidget {
@@ -19,10 +21,14 @@ class DigitalWatchScreenState extends State<DigitalWatchScreen> {
   void initState() {
     super.initState();
     currentDate = DateTime.now();
+    bool isUpdatable =
+        CacheHelper.sharedPreferences.getBool("isUpdatableWatch") ?? true;
     timer = Timer.periodic(Duration(milliseconds: 200), (val) {
-      setState(() {
-        currentDate = DateTime.now();
-      });
+      if (isUpdatable) {
+        setState(() {
+          currentDate = DateTime.now();
+        });
+      }
     });
   }
 
@@ -36,7 +42,30 @@ class DigitalWatchScreenState extends State<DigitalWatchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text("${currentDate.toString().replaceAll(" ", "\n")}"),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CustomTextWidget(
+                data: "${currentDate.toString().replaceAll(" ", "\n")}"),
+            SizedBox(height: 30),
+            GestureDetector(
+              onTap: () {
+                bool isUpdatable =
+                    CacheHelper.sharedPreferences.getBool("isUpdatableWatch") ??
+                        true;
+                CacheHelper.sharedPreferences
+                    .setBool("isUpdatableWatch", !isUpdatable);
+              },
+              child: CustomTextWidget(
+                data: "Hello World",
+                textColor: Colors.deepOrange,
+                fontWeight: FontWeight.w400,
+                fontSize: 14,
+                textDecoration: TextDecoration.lineThrough,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
